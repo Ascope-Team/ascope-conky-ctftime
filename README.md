@@ -8,6 +8,10 @@ Requirement: conky
 
 If you have any suggestions or improvement about the script, file an [issue](https://github.com/Ascope-Team/ascope-conky-ctftime/issues).
 
+## Preview
+
+![preview](ascope_conky_preview.png)
+
 ## License
 conky - GPL and BSD licenses  
-ascope - same license as well for this project 
+ascope - same license as well for this project
