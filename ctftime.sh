@@ -52,7 +52,7 @@ echo "${url_array[*]}"
 echo "${weight_array[*]}"
 '
 
-pad=$(printf '%0.1s' "-"{1..60});
+pad=$(printf '%0.1s' "-"{1..80});
  
 for ((i=0; i<${#weight_array[@]}; i++));
 do
@@ -64,21 +64,26 @@ do
     finish_time_reformat=$(date -d "${finish_array[i]}" +"%b %a %d %H:%M %p")
 
     duration=$( echo $(( ( `date +%s -d "${finish_array[i]}"` - `date +%s -d "${start_array[i]}"` ) / 3600 )) )
+   
+    time_left_running=$( date -u -d @"$(( $finish_time - $current_time ))" +"%dd %H:%M" )
+    time_left_upcoming=$( date -u -d @"$(( $start_time - $current_time ))" +"%dd %H:%M" )
 
     if [[ "$current_time" > "$finish_time" ]]; then
         if [[ "$ARCHIVE" = "true" ]]; then
-            printf '%*.*s %s' 0 32 "${title_array[i]} $pad" "$start_time_reformat — $finish_time_reformat "
+            printf '%*.*s %s' 0 42 "${title_array[i]} $pad" "$start_time_reformat — $finish_time_reformat "
             printf '%3d\n' $duration
         fi
     elif [[ "$current_time" > "$start_time" ]] && [[ "$current_time" < "$finish_time" ]]; then
         if [[ "$RUNNING" = "true" ]]; then
-            printf '%*.*s %s' 0 32 "${title_array[i]} $pad" "$start_time_reformat — $finish_time_reformat "
-            printf '%3d\n' $duration
+            printf '%*.*s %s' 0 42 "${title_array[i]} $pad" "$start_time_reformat — $finish_time_reformat "
+            printf '%3dh ' $duration
+            printf '('"$time_left_running"')\n'
         fi
     else
         if [[ "$UPCOMING" = "true" ]]; then
-            printf '%*.*s %s' 0 32 "${title_array[i]} $pad" "$start_time_reformat — $finish_time_reformat "
-            printf '%3d\n' $duration
+            printf '%*.*s %s' 0 42 "${title_array[i]} $pad" "$start_time_reformat — $finish_time_reformat "
+            printf '%3dh ' $duration
+            printf '('"$time_left_upcoming"')\n'
         fi
     fi
 done
