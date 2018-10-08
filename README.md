@@ -6,7 +6,11 @@ This repository contains a conky script to gather the latest ctftime.org upcomin
 Requirement: conky
 ```
 
-If you have any suggestions or improvement about the script, file an [issue](https://github.com/Ascope-Team/ascope-conky-ctftime/issues).
+## Current release notes
+
+The release v2 uses the ctftime.org ([api v1](https://ctftime.org/api/)) rather than parsing the upcoming events [rss](https://ctftime.org/event/list/upcoming/rss/).
+
+If you have any suggestions or improvement about the script, file an [issue](https://github.com/Ascope-Team/ascope-conky-ctftime/issues) or contact us privately.
 
 ## Preview
 
