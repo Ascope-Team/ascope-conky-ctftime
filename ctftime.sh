@@ -53,7 +53,18 @@ echo "${weight_array[*]}"
 '
 
 pad=$(printf '%0.1s' "-"{1..80});
- 
+
+seconds2time ()
+{
+   T=$1
+   D=$((T/60/60/24))
+   H=$((T/60/60%24))
+   M=$((T/60%60))
+   S=$((T%60))
+
+   printf '%02dd %02d:%02d' $D $H $M
+}
+
 for ((i=0; i<${#weight_array[@]}; i++));
 do
     current_time=$(date +%s)
@@ -65,8 +76,12 @@ do
 
     duration=$( echo $(( ( `date +%s -d "${finish_array[i]}"` - `date +%s -d "${start_array[i]}"` ) / 3600 )) )
    
-    time_left_running=$( date -u -d @"$(( $finish_time - $current_time ))" +"%dd %H:%M" )
-    time_left_upcoming=$( date -u -d @"$(( $start_time - $current_time ))" +"%dd %H:%M" )
+#    time_left_running=$( eval "echo $(date -ud @"$(($finish_time - $current_time))" +'$((%s/3600/24))d %H:%M')" )
+
+    time_left_running=$(echo $(seconds2time $(($finish_time - $current_time))) )
+
+#    time_left_upcoming=$( eval "echo $(date -ud @"$(($start_time - $current_time))" +'$((%s/3600/24))d %H:%M')" )
+    time_left_upcoming=$(echo $(seconds2time $(($start_time - $current_time))) )
 
     if [[ "$current_time" > "$finish_time" ]]; then
         if [[ "$ARCHIVE" = "true" ]]; then
